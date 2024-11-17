@@ -1,0 +1,27 @@
+-- Admin Configuration
+local admins = {
+    ["collljamesbroalt1"] = "HeadAdmin" -- Replace "YourUsername" with your Roblox username
+}
+
+-- Grant Admin Privileges on Player Join
+game.Players.PlayerAdded:Connect(function(player)
+    local adminRank = admins[player.Name]
+    if adminRank then
+        -- Assign the admin rank
+        print(player.Name .. " has been granted the rank: " .. adminRank)
+
+        -- Example: Give admin privileges
+        local leaderstats = Instance.new("Folder")
+        leaderstats.Name = "leaderstats"
+        leaderstats.Parent = player
+
+        local rank = Instance.new("StringValue")
+        rank.Name = "AdminRank"
+        rank.Value = adminRank
+        rank.Parent = leaderstats
+
+        -- Notify the player
+        player:LoadCharacter() -- Reload their character (optional)
+        player:Kick("You are now " .. adminRank .. ". Rejoin to see the effects!")
+    end
+end)
